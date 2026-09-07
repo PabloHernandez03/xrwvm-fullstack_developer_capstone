@@ -28,19 +28,21 @@ SECRET_KEY =\
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
+# Hosts del lab. El subdominio cambia segun donde levantes el
+# runserver, por eso estan los dos. Se declaran una sola vez y de aqui
+# salen ALLOWED_HOSTS y CSRF_TRUSTED_ORIGINS, para que no se
+# desincronicen al anadir uno nuevo.
+LAB_HOSTS = [
     # lab de Django (cluster misc-tools)
-    'pablohernan4-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
-    # lab de Docker (cluster theiak8s) - el host cambia segun donde
-    # se levante el runserver, por eso estan los dos
-    'pablohernan4-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    'pablohernan4-8000.theianext-0-labs-prod-misc-tools-'
+    'us-east-0.proxy.cognitiveclass.ai',
+    # lab de Docker (cluster theiak8s)
+    'pablohernan4-8000.theiadockernext-0-labs-prod-'
+    'theiak8s-4-tor01.proxy.cognitiveclass.ai',
 ]
-CSRF_TRUSTED_ORIGINS = [
-    'https://pablohernan4-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
-    'https://pablohernan4-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
-]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] + LAB_HOSTS
+CSRF_TRUSTED_ORIGINS = ['https://' + host for host in LAB_HOSTS]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
@@ -105,7 +107,8 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'django.contrib.auth.password_validation'
+        '.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
@@ -154,4 +157,3 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/build'),
     os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
-
