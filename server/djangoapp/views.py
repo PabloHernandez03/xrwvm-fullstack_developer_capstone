@@ -15,6 +15,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import CarMake, CarModel
 from .populate import initiate
+from .restapis import get_request, analyze_review_sentiments, post_review
 
 
 # Get an instance of a logger
@@ -99,19 +100,60 @@ def get_cars(request):
     return JsonResponse({"CarModels": cars})
 
 
-# # Update the `get_dealerships` view to render the index page with
-# a list of dealerships
-# def get_dealerships(request):
-# ...
+# Update the `get_dealerships` view to render the list of dealerships:
+# all of them by default, or only those of a state if one is passed
+def get_dealerships(request, state="All"):
+    if state == "All":
+        endpoint = "/fetchDealers"
+    else:
+        endpoint = "/fetchDealers/" + state
+    dealerships = get_request(endpoint)
+    return JsonResponse({"status": 200, "dealers": dealerships})
 
-# Create a `get_dealer_reviews` view to render the reviews of a dealer
-# def get_dealer_reviews(request,dealer_id):
-# ...
 
 # Create a `get_dealer_details` view to render the dealer details
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    if dealer_id:
+        endpoint = "/fetchDealer/" + str(dealer_id)
+        dealership = get_request(endpoint)
+        return JsonResponse({"status": 200, "dealer": dealership})
+    return JsonResponse({"status": 400, "message": "Bad Request"})
+
+
+# Create a `get_dealer_reviews` view to render the reviews of a dealer,
+# each one tagged with the sentiment returned by the microservice
+def get_dealer_reviews(request, dealer_id):
+    # if dealer id has been provided
+    if dealer_id:
+        endpoint = "/fetchReviews/dealer/" + str(dealer_id)
+        reviews = get_request(endpoint)
+        for review_detail in reviews:
+            response = analyze_review_sentiments(review_detail['review'])
+            print(response)
+            # analyze_review_sentiments devuelve None si el microservicio
+            # no contesta. Sin esta guarda, un fallo de red tumbaria el
+            # endpoint entero con un 500 en vez de mostrar las reviews.
+            # El frontend pinta el icono neutro ante cualquier valor que
+            # no sea positive o negative.
+            if response:
+                review_detail['sentiment'] = response['sentiment']
+            else:
+                review_detail['sentiment'] = "neutral"
+        return JsonResponse({"status": 200, "reviews": reviews})
+    return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 # Create a `add_review` view to submit a review
-# def add_review(request):
-# ...
+@csrf_exempt
+def add_review(request):
+    # Only authenticated users may post a review
+    if not request.user.is_anonymous:
+        data = json.loads(request.body)
+        try:
+            post_review(data)
+            return JsonResponse({"status": 200})
+        except Exception:
+            return JsonResponse(
+                {"status": 401, "message": "Error in posting review"}
+            )
+    return JsonResponse({"status": 403, "message": "Unauthorized"})
