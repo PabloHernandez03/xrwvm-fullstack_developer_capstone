@@ -31,10 +31,15 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    # lab de Django (cluster misc-tools)
     'pablohernan4-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
+    # lab de Docker (cluster theiak8s) - el host cambia segun donde
+    # se levante el runserver, por eso estan los dos
+    'pablohernan4-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://pablohernan4-8000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai',
+    'https://pablohernan4-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai',
 ]
 
 REST_FRAMEWORK = {
