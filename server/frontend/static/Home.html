@@ -8,13 +8,24 @@
 
 const logout = async (e) => {
   e.preventDefault();
+  // Build logout URL and make GET request to logout endpoint
   let logout_url = window.location.origin + "/djangoapp/logout";
-  const res = await fetch(logout_url, { method: "GET" });
+  const res = await fetch(logout_url, {
+    method: "GET",
+  });
+
   const json = await res.json();
   if (json) {
-    sessionStorage.removeItem("username");
+    // Clear session storage, notify the user, then reload
+    let username = sessionStorage.getItem('username');
+    sessionStorage.removeItem('username');
+    // El alert va ANTES de navegar: si se pone despues de
+    // window.location.href el navegador ya esta saliendo de la pagina
+    // y en muchos navegadores el alert no llega a mostrarse.
+    alert("Logging out " + username + "...");
     window.location.href = window.location.origin;
-  } else {
+  }
+  else {
     alert("The user could not be logged out.");
   }
 };

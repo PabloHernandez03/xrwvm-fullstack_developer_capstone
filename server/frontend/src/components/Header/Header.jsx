@@ -14,9 +14,9 @@ const Header = () => {
     if (json) {
       let username = sessionStorage.getItem('username');
       sessionStorage.removeItem('username');
-      window.location.href = window.location.origin;
-      window.location.reload();
+      // alert antes de navegar, si no el navegador se va sin mostrarlo
       alert("Logging out "+username+"...")
+      window.location.href = window.location.origin;
     }
     else {
       alert("The user could not be logged out.")
