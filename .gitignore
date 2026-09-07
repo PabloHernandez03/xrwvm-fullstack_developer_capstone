@@ -130,3 +130,7 @@ dmypy.json
 
 # Entregas locales del capstone (no se suben a GitHub)
 entregas/
+
+# Virtualenv del capstone
+server/djangoenv/
+djangoenv/
