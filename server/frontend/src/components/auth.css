@@ -1,0 +1,131 @@
+/* Estilos compartidos por las pantallas de Login y Register */
+
+.auth_page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;   /* sin esto la tarjeta se estira a lo alto */
+  padding: 45px 20px 60px;
+  background-color: #f5f3f8;
+  min-height: calc(100vh - 1in);
+}
+
+.auth_card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 32px 34px 26px;
+  box-shadow: 0 4px 18px rgba(60, 40, 90, .15);
+}
+
+.auth_title {
+  color: rgb(97, 64, 128);
+  margin: 0 0 4px;
+  text-align: center;
+}
+
+.auth_subtitle {
+  text-align: center;
+  color: #6b6b6b;
+  font-size: 14px;
+  margin: 0 0 22px;
+}
+
+.auth_label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgb(97, 64, 128);
+  margin-bottom: 5px;
+}
+
+.auth_input {
+  height: 42px;
+  font-size: 15px;
+  padding: 0 12px;
+  margin-bottom: 16px;
+  border: 1px solid #cfc8d8;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth_input:focus {
+  outline: none;
+  border-color: rgb(97, 64, 128);
+  box-shadow: 0 0 0 3px rgba(97, 64, 128, .15);
+}
+
+/* fila de dos campos (nombre / apellido) */
+.auth_row {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+}
+
+.auth_col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.auth_error {
+  background-color: #fdecec;
+  border: 1px solid #f0b8b8;
+  color: #a12626;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.auth_actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.auth_button {
+  flex: 1;
+  cursor: pointer;
+  font-size: 15px;
+  height: 44px;
+  border-radius: 6px;
+  border: 1px solid rgb(97, 64, 128);
+  background-color: white;
+  color: rgb(97, 64, 128);
+}
+
+.auth_button:hover {
+  background-color: #f0ebf6;
+}
+
+.auth_button.primary {
+  background-color: rgb(97, 64, 128);
+  color: white;
+}
+
+.auth_button.primary:hover {
+  background-color: rgb(80, 52, 107);
+}
+
+.auth_footer {
+  text-align: center;
+  font-size: 14px;
+  color: #6b6b6b;
+  margin: 20px 0 0;
+}
+
+.auth_footer a {
+  color: rgb(97, 64, 128);
+  font-weight: bold;
+}
+
+@media (max-width: 480px) {
+  .auth_row { flex-direction: column; gap: 0; }
+  .auth_card { padding: 26px 22px 22px; }
+}
