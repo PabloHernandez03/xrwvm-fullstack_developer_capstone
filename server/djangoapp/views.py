@@ -84,6 +84,7 @@ def registration(request):
     data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
+
 def get_cars(request):
     count = CarMake.objects.filter().count()
     print(count)
