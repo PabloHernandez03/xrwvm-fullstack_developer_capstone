@@ -134,3 +134,8 @@ entregas/
 # Virtualenv del capstone
 server/djangoenv/
 djangoenv/
+
+# Salida de collectstatic (se regenera en el entrypoint del contenedor).
+# Anclado con "/" inicial para NO pillar server/frontend/static, que si
+# es codigo fuente.
+/server/static/

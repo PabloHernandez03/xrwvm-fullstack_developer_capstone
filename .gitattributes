@@ -1,0 +1,6 @@
+# entrypoint.sh lo ejecuta bash dentro del contenedor Linux.
+# Si git lo dejara con finales CRLF de Windows, el contenedor fallaria
+# con "$'': command not found" y no arrancaria.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yaml text eol=lf

@@ -1,0 +1,14 @@
+# El contexto de build es server/. Sin este fichero, docker se lleva
+# dentro de la imagen el virtualenv y node_modules: cientos de MB que
+# no sirven de nada, y ademas el venv trae binarios compilados para
+# otra plataforma.
+djangoenv/
+**/node_modules/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# NO ignorar db.sqlite3 ni frontend/build:
+#   db.sqlite3    -> lleva los usuarios dentro de la imagen, el
+#                    enunciado cuenta con ello para poder hacer login
+#   frontend/build-> es el React ya compilado que sirve Django
