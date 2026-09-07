@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Entregas locales del capstone (no se suben a GitHub)
+entregas/
